@@ -7,12 +7,12 @@ $(document).ready(function() {
     var city = $("input#city").val();
     var state = $("input#state").val();
     var zip = $("input#zip").val();
-    var newContact = { firstName: inputtedFirstName, lastName: inputtedLastName, street: street, city: city, state: state, zip: zip };
-
-    $("ul#contacts").append("<li><span class='contact'>" +
-                            newContact.firstName + " " +
-                            newContact.lastName + " " +
-                            "</span></li>");
+    var newContact = { firstName: inputtedFirstName, lastName: inputtedLastName,
+                      street: street, city: city, state: state, zip: zip,
+                      fullAddress: function() {
+                      return this.street + " " + this.city + " " + this.state + " " + this.zip;
+                      }
+                      };
 
     $("input#new-first-name").val("");
     $("input#new-last-name").val("");
@@ -21,49 +21,17 @@ $(document).ready(function() {
     $("input#state").val("");
     $("input#zip").val("");
 
+    $("ul#contacts").append("<li><span class='contact'>" +
+                            newContact.firstName + " " +
+                            newContact.lastName + " " +
+                            "</span></li>");
+    // debugger;
     $(".contact").last().click(function() {
       $("#show-contact").show();
       $("#show-contact h2").text(newContact.firstName + " " + newContact.lastName);
       $(".first-name").text(newContact.firstName);
       $(".last-name").text(newContact.lastName);
-      $(".street").text(newContact.street);
-      $(".city").text(newContact.city);
-      $(".state").text(newContact.state);
-      $(".zip").text(newContact.zip);
+      $(".full-address").text(newContact.fullAddress());
     });
   });
-
-$("button#dummy-create").click(function(event) {
-  event.preventDefault();
-  var inputtedFirstName = 'Albondigas';
-  var inputtedLastName = 'Montoya';
-  var street = '829 Valencia Street';
-  var city = 'San Francisco';
-  var state = 'California';
-  var zip = '90003';
-  var newContact = { firstName: inputtedFirstName, lastName: inputtedLastName, street: street, city: city, state: state, zip: zip };
-
-  $("ul#contacts").append("<li><span class='contact'>" +
-                          newContact.firstName + " " +
-                          newContact.lastName + " " +
-                          "</span></li>");
-
-  $("input#new-first-name").val("");
-  $("input#new-last-name").val("");
-  $("input#street").val("");
-  $("input#city").val("");
-  $("input#state").val("");
-  $("input#zip").val("");
-
-  $(".contact").last().click(function() {
-    $("#show-contact").show();
-    $("#show-contact h2").text(newContact.firstName + " " + newContact.lastName);
-    $(".first-name").text(newContact.firstName);
-    $(".last-name").text(newContact.lastName);
-    $(".street").text(newContact.street);
-    $(".city").text(newContact.city);
-    $(".state").text(newContact.state);
-    $(".zip").text(newContact.zip);
-  });
-});
 });
